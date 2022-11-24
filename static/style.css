@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "Heuristica";
+    src: local("Heuristica"), url("/static/Heuristica-Regular.woff") format("woff2");
+}
+
+/* blink polyfill as these IDIOTS removed th eblink tag */
+blink {
+  animation: 2s linear infinite condemned_blink_effect;
+}
+
+@keyframes condemned_blink_effect {
+  0% {
+    visibility: hidden;
+  }
+  50% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+
+* {
+    font-smooth: never;
+    -webkit-font-smoothing: none
+}
+
+BODY {
+    /** use TNR if available, otherwise Heuristica looks pretty close */
+    font-family: "Times New Roman", "Heuristica";
+    height: 100%;
+
+    cursor: url("/static/Salior Moon.cur"), url("/static/cursor.png"), auto;
+    font-size: 36px;
+}
+
+BODY.BG-1 {
+    background-image: url("/static/r-eyecatch.jpg");
+    background-repeat: repeat;
+}
+
+BODY.BG-2 {
+    background-image: url("/static/stars-title.jpg");
+    background-repeat: repeat;
+}
+
+H1 {
+    font-size: 96px;
+}
+
+H2 {
+    font-size: 78px;
+}
+
+TD, TH {
+    border: 1px solid black;
+    padding: 10px 20px;
+}
+
+
+.FLEX {
+    display: flex;
+    justify-content: around;
+}
+
+.FLEX-CHILD {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: content;
+}
+
+.CENTRE {
+    text-align: center;
+}
+
+.RED {
+    color: red;
+    background-color: blue;
+}

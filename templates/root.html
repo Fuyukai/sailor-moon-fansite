@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{## The root HTML template used for the website. ##}
+<HTML>
+<HEAD>
+<META CHARSET="utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="description" CONTENT="Lura's Sailor Moon Watch Guide">
+<META name="color-scheme" CONTENT="only light">
+
+<TITLE>LURA'S SAILOR MOON WATCH GUIDE!!!</TITLE>
+<LINK REL="stylesheet" HREF="/static/style.css">
+<SCRIPT SRC="https://unpkg.com/feather-icons"></SCRIPT>
+</HEAD>
+<BODY CLASS="BG-1" ID="BDOY">
+{% include "content.html" %}
+</BODY>
+<SCRIPT>feather.replace()</SCRIPT>
+<SCRIPT>
+    function toggleBg() {
+        var klass = document.getElementById("BDOY");
+        if (klass.className === "BG-1") {
+            klass.className = "BG-2";
+        } else {
+            klass.className = "BG-1";
+        }
+    }
+</SCRIPT>
+</HTML>

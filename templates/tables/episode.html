@@ -1,0 +1,67 @@
+{%- macro stars(rating) -%}
+{% for star in range(1, 6) %}
+{% if rating >= star %}
+<i data-feather="star" style="color: orange"></i>
+{% else %}
+<i data-feather="star"></i>
+{% endif %}
+{% endfor %}
+{%- endmacro -%}
+
+{%- macro table_header(number, my_rating, her_rating, series) -%}
+{% set s_number = "{:03d}".format(number) %}
+
+<TD><SPAN>{{ s_number }}</SPAN></TD>
+<TD>
+    <IMG SRC="/static/screenshots/{{ series }}/ep{{ s_number }}.jpg" HEIGHT="180" WIDTH="240">
+</TD>
+<TD CLASS="CENTRE">
+    {% if my_rating >= 3 %}
+        <B STYLE="COLOR: GREEN">My Rating</B>:<br/><br/>
+    {% else %}
+        <B STYLE="COLOR: RED">My Rating</B>:<br/><br/>
+    {% endif %}
+    {{ stars(my_rating) }}
+</TD>
+<TD CLASS="CENTRE">
+    {% if her_rating >= 3 %}
+    <B STYLE="COLOUR: GREEN">Brick's Rating</B>:<br/><br/>
+    {% else %}
+    <B STYLE="COLOR: RED">Brick's Rating</B>:<br/><br/>
+    {% endif %}
+    {{ stars(her_rating) }}
+</TD>
+{% endmacro %}
+
+{%- macro skip(type) -%}
+{% if type == "mandatory" %}
+<P STYLE="COLOR: PURPLE">Mandatory!</P>
+{% elif type == "must" %}
+<P STYLE="COLOR: GREEN">A Must Watch!</P>
+{% elif type == "should" %}
+<P STYLE="COLOR: CYAN">You Should Watch This!</P>
+{% elif type == "can" %}
+<P STYLE="COLOR: ORANGE">You Can Skip This</P>
+{% elif type == "shit" %}
+<P STYLE="COLOR: RED">You Should Probably Skip This</P>
+{% else %}
+{{ raise("invalid type: " + type) }}
+{% endif %}
+{%- endmacro -%}
+
+{% block header required %}{% endblock %}
+<TD>
+    <details>
+        <summary>Episode Synopsis</summary>
+        {% block synopsis required %}{% endblock %}
+    </details>
+</TD>
+<TD>
+    <details>
+        <summary>Episode Review</summary>
+        {% block review required %}{% endblock %}
+    </details>
+</TD>
+<TD>
+    {% block skip required %}{% endblock %}
+</TD>
