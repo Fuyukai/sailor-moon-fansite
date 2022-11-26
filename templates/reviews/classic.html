@@ -2,7 +2,7 @@
 
 {% block body %}
 <H1 STYLE="COLOR: LIME">Sailor Moon Classic - Episode Reviews</H1>
-<HR STYLE="HEIGHT: 10PX; BACKGROUND-COLOR: BLACK">
+<HR STYLE="HEIGHT: 10PX; BACKGROUND-COLOR: BLACK; COLOR: BLACK;">
 <P STYLE="BACKGROUND-COLOR: BLACK">
     For those of you who care, I've tried to make these reviews relatively spoiler free but I do
     reference certain future stylistic and tone choices in the later series. Keep that in mind when
@@ -11,7 +11,7 @@
 
 <H2 ID="EP-001">The Crybaby: Usagi's Beautiful Transformation</H2>
 {# details/summary don't work in IE5 so we style a div instead. #}
-<DIV STYLE="BACKGROUND-COLOR: BLACK;"> <details>
+<DIV CLASS="REVIEW-CONTAINER"> <DIV CLASS="REVIEW"> <details>
     <summary>Episode Review</summary>
     <p>
         The very first episode of Sailor Moon. This is where it all started. And for a first
@@ -54,11 +54,11 @@
         Overall, this is a great first episode to ease you in to watching the next 199 episodes.
         I give this episode a 5/5.
     </p>
-</details> </DIV>
+</details> </DIV> </DIV>
 <HR>
 <H2 ID="EP-002">Punishment Awaits: The House of Fortune is the Monster Mansion</H2>
 
-<DIV STYLE="BACKGROUND-COLOR: BLACK;"> <details>
+<DIV CLASS="REVIEW-CONTAINER"> <DIV CLASS="REVIEW"> <details>
     <summary>Episode Review</summary>
     <p>
         This is the first filler episode of the show, and it happens to immediately step on a nail.
@@ -98,5 +98,5 @@
         taste in my mouth. There's no real reason to watch this episode unless you're trying to
         watch them all. I give it a 1.5/5 - the .5 for Motoki.
     </p>
-</details> </DIV>
+</details> </DIV> </DIV>
 {% endblock %}

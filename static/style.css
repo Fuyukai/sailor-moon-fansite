@@ -78,3 +78,14 @@ TD, TH {
     color: red;
     background-color: blue;
 }
+
+.REVIEW-CONTAINER {
+
+}
+
+.REVIEW-CONTAINER > .REVIEW {
+    width: 75%;
+    margin: auto;
+    background-color: black;
+    padding: 20px;
+}
