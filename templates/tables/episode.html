@@ -8,32 +8,7 @@
 {% endfor %}
 {%- endmacro -%}
 
-{%- macro table_header(number, my_rating, her_rating, series) -%}
-{% set s_number = "{:03d}".format(number) %}
-
-<TD><SPAN>{{ s_number }}</SPAN></TD>
-<TD>
-    <IMG SRC="/static/screenshots/{{ series }}/ep{{ s_number }}.jpg" HEIGHT="180" WIDTH="240">
-</TD>
-<TD CLASS="CENTRE">
-    {% if my_rating >= 3 %}
-        <B STYLE="COLOR: GREEN">My Rating</B>:<br/><br/>
-    {% else %}
-        <B STYLE="COLOR: RED">My Rating</B>:<br/><br/>
-    {% endif %}
-    {{ stars(my_rating) }}
-</TD>
-<TD CLASS="CENTRE">
-    {% if her_rating >= 3 %}
-    <B STYLE="COLOUR: GREEN">Brick's Rating</B>:<br/><br/>
-    {% else %}
-    <B STYLE="COLOR: RED">Brick's Rating</B>:<br/><br/>
-    {% endif %}
-    {{ stars(her_rating) }}
-</TD>
-{% endmacro %}
-
-{%- macro skip(type) -%}
+{%- macro r_skip(type) -%}
 {% if type == "mandatory" %}
 <P STYLE="COLOR: PURPLE">Mandatory!</P>
 {% elif type == "must" %}
@@ -49,7 +24,29 @@
 {% endif %}
 {%- endmacro -%}
 
-{% block header required %}{% endblock %}
+{% set s_number = "{:03d}".format(number) %}
+
+{#
+required vars:
+- series: the series name
+- number: the episode number, 1-200
+- my_rating: my rating out of 5
+#}
+
+<TD><SPAN>{{ s_number }}</SPAN></TD>
+<TD>{{ title }}</TD>
+<TD>
+    <IMG SRC="/static/screenshots/{{ series }}/ep{{ s_number }}.jpg" HEIGHT="180" WIDTH="240">
+</TD>
+<TD CLASS="CENTRE">
+    {% if my_rating >= 3 %}
+        <B STYLE="COLOR: GREEN" DATA-RATING="">My Rating</B>:<br/><br/>
+    {% else %}
+        <B STYLE="COLOR: RED">My Rating</B>:<br/><br/>
+    {% endif %}
+    {{ stars(my_rating|int) }}
+</TD>
+
 <TD>
     <details>
         <summary>Episode Synopsis</summary>
@@ -57,11 +54,8 @@
     </details>
 </TD>
 <TD>
-    <details>
-        <summary>Episode Review</summary>
-        {% block review required %}{% endblock %}
-    </details>
+    <A HREF="/reviews/{{ series }}.html#EP-{{ s_number }}">Episode Review</A>
 </TD>
 <TD>
-    {% block skip required %}{% endblock %}
+    {{ r_skip(skip) }}
 </TD>

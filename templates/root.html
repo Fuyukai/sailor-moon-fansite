@@ -10,11 +10,12 @@
 <TITLE>LURA'S SAILOR MOON WATCH GUIDE!!!</TITLE>
 <LINK REL="stylesheet" HREF="/static/style.css">
 <SCRIPT SRC="https://unpkg.com/feather-icons"></SCRIPT>
+
+{% block customhead %}
+
+{% endblock %}
 </HEAD>
-<BODY CLASS="BG-1" ID="BDOY">
-{% include "content.html" %}
-</BODY>
-<SCRIPT>feather.replace()</SCRIPT>
+<BODY CLASS="BG-2" ID="BDOY">
 <SCRIPT>
     function toggleBg() {
         var klass = document.getElementById("BDOY");
@@ -25,4 +26,10 @@
         }
     }
 </SCRIPT>
+
+{% block body required %}
+
+{% endblock %}
+</BODY>
+<SCRIPT>feather.replace()</SCRIPT>
 </HTML>

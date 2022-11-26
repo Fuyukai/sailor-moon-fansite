@@ -1,9 +1,12 @@
+{% extends "root.html" %}
+
 {%- macro theader() -%}
 <THEAD STYLE="BACKGROUND-COLOR: WHITE">
 <TR>
     <TH STYLE="TEXT-ALIGN: CENTER; BACKGROUND-COLOR: BLACK; COLOR: WHITE;">#</TH>
+    <TH><SPAN STYLE="COLOR: HOTPINK">Title</SPAN></TH>
     <TH><SPAN STYLE="COLOR: GREEN">Preview Image</SPAN></TH>
-    <TH STYLE="COLOR: FUCHSIA" colspan="2">Ratings</TH>
+    <TH STYLE="COLOR: FUCHSIA">Ratings</TH>
     <TH>Synopsis</TH>
     <TH>Review</TH>
     <TH>Recommendation</TH>
@@ -11,6 +14,7 @@
 </THEAD>
 {%- endmacro -%}
 
+{% block body %}
 <H1 STYLE="COLOR: FUCHSIA" ALIGN="CENTER">
     <MARQUEE SCROLLAMOUNT="24">Lura's Sailor Moon Watch Guide</MARQUEE>
 </H1>
@@ -87,8 +91,8 @@
 <TABLE STYLE="BACKGROUND-COLOR: WHITE">
     {{ theader() }}
     <TBODY>
+    {% include "tables/classic/ep001.html" %}
     <TR>
-
     </TR>
     </TBODY>
 </TABLE>
@@ -146,3 +150,8 @@
 </TABLE>
 
 <HR STYLE="HEIGHT: 10PX; BACKGROUND-COLOR: BLACK">
+
+<script>
+    toggleBg();
+</script>
+{% endblock %}
