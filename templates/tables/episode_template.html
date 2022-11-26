@@ -1,3 +1,5 @@
+{% from "_titles.jinja2" import titles %}
+
 {%- macro stars(rating) -%}
 {% for star in range(1, 6) %}
 {% if rating >= star %}
@@ -25,6 +27,7 @@
 {%- endmacro -%}
 
 {% set s_number = "{:03d}".format(number) %}
+{% set title = titles[number - 1] %}
 
 {#
 required vars:

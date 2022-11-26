@@ -1,5 +1,8 @@
-{%- macro review_header(id, title) -%}
+{% from "_titles.jinja2" import titles %}
+
+{%- macro review_header(id) -%}
 {% set s_number = "{:03d}".format(id) %}
+{% set title = titles[id - 1] %}
 <H2 ID="EP-{{ s_number }}">{{ title }}</H2>
 
 <DIV CLASS="REVIEW-CONTAINER"> <DIV CLASS="REVIEW"> <details>
