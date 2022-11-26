@@ -38,9 +38,9 @@ required vars:
 <TD>
     <IMG SRC="/static/screenshots/{{ series }}/ep{{ s_number }}.jpg" HEIGHT="180" WIDTH="240">
 </TD>
-<TD CLASS="CENTRE WIDETABLE">
+<TD CLASS="CENTRE WIDETABLE" data-rating="{{ my_rating }}">
     {% if my_rating >= 3 %}
-        <B STYLE="COLOR: GREEN" DATA-RATING="">My Rating</B>:<br/><br/>
+        <B STYLE="COLOR: GREEN">My Rating</B>:<br/><br/>
     {% else %}
         <B STYLE="COLOR: RED">My Rating</B>:<br/><br/>
     {% endif %}
