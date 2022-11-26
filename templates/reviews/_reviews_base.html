@@ -11,3 +11,9 @@
     }
 </style>
 {% endblock %}
+
+{% block body %}
+<script>
+    document.getElementById("details-" + window.location.hash.slice(1)).open = true;
+</script>
+{% endblock %}
