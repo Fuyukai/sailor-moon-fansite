@@ -1,0 +1,12 @@
+{%- macro review_header(id, title) -%}
+{% set s_number = "{:03d}".format(id) %}
+<H2 ID="EP-{{ s_number }}">{{ title }}</H2>
+
+<DIV CLASS="REVIEW-CONTAINER"> <DIV CLASS="REVIEW"> <details>
+    <summary>Episode Review</summary>
+    {%- endmacro -%}
+
+    {%- macro review_footer() -%}
+</details> </DIV> </DIV>
+<HR>
+{%- endmacro -%}
