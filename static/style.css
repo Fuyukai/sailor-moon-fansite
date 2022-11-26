@@ -20,12 +20,6 @@ blink {
   }
 }
 
-
-* {
-    font-smooth: never;
-    -webkit-font-smoothing: none
-}
-
 BODY {
     /** use TNR if available, otherwise Heuristica looks pretty close */
     font-family: "Times New Roman", "Heuristica";
@@ -45,19 +39,15 @@ BODY.BG-2 {
     background-repeat: repeat;
 }
 
-H1 {
-    font-size: 96px;
-}
-
-H2 {
-    font-size: 78px;
-}
+H1 { font-size: 96px; }
+H2 { font-size: 78px; }
 
 TD, TH {
     border: 1px solid black;
     padding: 10px 20px;
 }
 
+.WIDETABLE { width: 15% }
 
 .FLEX {
     display: flex;
@@ -70,18 +60,14 @@ TD, TH {
     flex-basis: content;
 }
 
-.CENTRE {
-    text-align: center;
-}
+.CENTRE { text-align: center; }
 
 .RED {
     color: red;
     background-color: blue;
 }
 
-.REVIEW-CONTAINER {
-
-}
+.REVIEW-CONTAINER {}
 
 .REVIEW-CONTAINER > .REVIEW {
     width: 75%;
