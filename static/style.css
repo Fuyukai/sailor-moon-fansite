@@ -75,3 +75,5 @@ TD, TH {
     background-color: black;
     padding: 20px;
 }
+
+SPAN.S { TEXT-DECORATION: LINE-THROUGH; }
