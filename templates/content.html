@@ -91,51 +91,11 @@
 <TABLE STYLE="BACKGROUND-COLOR: WHITE">
     {{ theader() }}
     <TBODY>
+    {% for row in per_dir["classic"] %}
     <TR>
-        {% include "tables/classic/ep001.html" %}
+        {% include "tables/classic/" + row %}
     </TR>
-    <TR>
-        {% include "tables/classic/ep002.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep003.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep004.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep005.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep006.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep007.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep008.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep009.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep010.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep011.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep012.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep013.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep014.html" %}
-    </TR>
-    <TR>
-        {% include "tables/classic/ep015.html" %}
-    </TR>
+    {% endfor %}
     </TBODY>
 </TABLE>
 

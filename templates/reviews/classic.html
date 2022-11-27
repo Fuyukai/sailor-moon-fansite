@@ -11,22 +11,11 @@
     reading these - and don't read reviews for episodes you haven't watched!
 </p>
 
-{% include "reviews/classic/ep001.html" %}
-{% include "reviews/classic/ep002.html" %}
-{% include "reviews/classic/ep003.html" %}
-{% include "reviews/classic/ep004.html" %}
-{% include "reviews/classic/ep005.html" %}
-{% include "reviews/classic/ep006.html" %}
-{% include "reviews/classic/ep007.html" %}
-{% include "reviews/classic/ep008.html" %}
-{% include "reviews/classic/ep009.html" %}
-{% include "reviews/classic/ep010.html" %}
-{% include "reviews/classic/ep011.html" %}
-{% include "reviews/classic/ep012.html" %}
-{% include "reviews/classic/ep013.html" %}
-{% include "reviews/classic/ep014.html" %}
-{% include "reviews/classic/ep015.html" %}
-
+{% for row in per_dir["classic"] %}
+<TR>
+    {% include "reviews/classic/" + row %}
+</TR>
+{% endfor %}
 {{ super() }}
 
 {% endblock %}
