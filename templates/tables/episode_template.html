@@ -41,7 +41,19 @@ required vars:
 <TD><SPAN>{{ s_number }}</SPAN></TD>
 <TD>{{ title }}</TD>
 <TD>
+    {% if not multi_image %}
     <IMG SRC="/static/screenshots/{{ series }}/ep{{ s_number }}.jpg" HEIGHT="180" WIDTH="240">
+    {% else %}
+    <IMG
+            SRC="/static/screenshots/{{ series }}/ep{{ s_number }}-1.jpg"
+            data-series="{{ series }}"
+            data-ep="{{ s_number }}"
+            HEIGHT="180"
+            WIDTH="240"
+            onmouseover="image_hover(this)"
+            onmouseleave="image_unhover(this)"
+    >
+    {% endif %}
 </TD>
 <TD CLASS="CENTRE WIDETABLE" data-rating="{{ my_rating }}">
     {% if my_rating >= 3 %}

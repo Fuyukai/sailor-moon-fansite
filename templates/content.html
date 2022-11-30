@@ -157,4 +157,17 @@
 <script>
     toggleBg();
 </script>
+<script>
+    function image_hover(el) {
+        let series = el.getAttribute("data-series");
+        let episode = el.getAttribute("data-ep");
+        el.setAttribute("src", "/static/screenshots/" + series + "/ep" + episode + "-2.jpg")
+    }
+
+    function image_unhover(el) {
+        let series = el.getAttribute("data-series");
+        let episode = el.getAttribute("data-ep");
+        el.setAttribute("src", "/static/screenshots/" + series + "/ep" + episode + "-1.jpg")
+    }
+</script>
 {% endblock %}
