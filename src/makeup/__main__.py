@@ -1,13 +1,13 @@
 """
 Makes up the static website.
 """
+
 import datetime
 import os
 import shutil
 import time
 from functools import partial
 from pathlib import Path
-from stat import S_ISDIR
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -76,14 +76,7 @@ def include_static_helper(relative_dir, path: str):
     return requested_static_files
 
 
-before = time.monotonic()
-
-env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
-env.globals["raise"] = raise_helper
-env.globals["current_date"] = datetime.datetime.utcnow().strftime("%-d %B, %Y, %-I:%M %p")
-
-
-def build_root():
+def build_root(env: Environment):
     for file in ROOT_FILES:
         # for files in subdirectories, e.g. `pages/something.html`, make sure the output directory
         # even exists.
@@ -96,7 +89,7 @@ def build_root():
 
 
 # build files recursively
-def build_recursively():
+def build_recursively(env: Environment):
     for dirname in SCAN_DIRECTORIES:
         dir = Path(dirname)
         path = TEMPLATE_DIR / dir
@@ -139,10 +132,20 @@ def copy_static_files():
             shutil.copy2(input, output)
 
 
-build_root()
-build_recursively()
-copy_static_files()
+def main():
+    before = time.monotonic()
 
-after = time.monotonic()
+    env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
+    env.globals["raise"] = raise_helper
+    env.globals["current_date"] = datetime.datetime.utcnow().strftime("%-d %B, %Y, %-I:%M %p")
 
-print(f"built, took {after - before:.04f}s")
+    build_root(env)
+    build_recursively(env)
+    copy_static_files()
+
+    after = time.monotonic()
+
+    print(f"built, took {after - before:.04f}s")
+
+
+main()
