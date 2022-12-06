@@ -1,0 +1,78 @@
+{% extends "_root.html" %}
+{% from "_titles.jinja2" import titles %}
+
+{# requires a set series_id = "..." #}
+{# as well as a set number = ... #}
+{% block body %}
+{% set series_name = id_to_title(series_id) %}
+{% set s_num = "{:03d}".format(number) %}
+
+<nav>
+<div class="FLEX FLEX-AROUND">
+    {% if number > 1 %}
+    {% set prev_num = number - 1 %}
+    {% set prev_s_num = "{:03d}".format(prev_num) %}
+    {% set prev_series_id = id_for_ep(prev_num) %}
+    {% set prev_series = id_to_title(prev_series_id) %}
+
+    <div class="FLEX-CHILD">
+        <span class="C-WHITE">{{ prev_series }}</span>
+        <a href="/reviews/{{ prev_series_id }}/ep{{ prev_s_num }}/">
+            Episode {{ prev_s_num }}
+        </a>
+    </div>
+
+    {% else %}
+    <div class="FLEX-CHILD">
+        <em class="C-WHITE">No Previous Episode</em>
+    </div>
+    {% endif %}
+
+    <div class="FLEX-CHILD">
+        <i class="bi bi-arrow-left C-WHITE"></i>
+    </div>
+
+    <div class="FLEX-CHILD">
+        <span class="C-PINK">{{ series_name }} Episode {{ s_num }}</span>
+    </div>
+
+    <div class="FLEX-CHILD">
+        <i class="bi bi-arrow-right C-WHITE"></i>
+    </div>
+
+    {% if number < 200 %}
+    {% set next_num = number + 1 %}
+    {% set next_s_num = "{:03d}".format(next_num) %}
+    {% set next_series_id = id_for_ep(next_num) %}
+    {% set next_series = id_to_title(next_series_id) %}
+    <div class="FLEX-CHILD">
+        <span class="C-WHITE">{{ next_series }}</span>
+        <a href="/reviews/{{ next_series_id }}/ep{{ next_s_num }}">
+            Episode {{ next_s_num }}
+        </a>
+    </div>
+
+    {% else %}
+    <div class="FLEX-CHILD">
+        <em>No Next Episode</em>
+    </div>
+    {% endif %}
+</div>
+</nav>
+<hr/>
+
+<h1 class="C-PINK CENTRE" style="font-size: 4vw;">{{ titles[number - 1] }}</h1>
+<a href="/reviews/{{ series_id }}#ROW-{{ s_num }}">Back to the Reviews Page</a>
+<hr/>
+
+{% block review_image %}
+<IMG SRC="preview.jpg" height="405" width="540" style="margin: auto">
+{% endblock %}
+
+<DIV CLASS="REVIEW-CONTAINER"> <DIV CLASS="REVIEW">
+{% block review required %}
+{% endblock %}
+</DIV> </DIV>
+<hr/>
+<a href="#">Jump to Top</a>
+{% endblock %}

@@ -1,0 +1,5 @@
+{%- macro conditional_include(path) -%}
+{% if file_exists(path) %}
+{% include path %}
+{% endif %}
+{%- endmacro -%}

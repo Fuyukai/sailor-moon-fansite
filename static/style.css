@@ -28,6 +28,7 @@ BODY {
 
     cursor: url("/static/Salior Moon.cur"), url("/static/cursor.png"), auto;
     font-size: 36px;
+    margin: 4px;
 }
 
 H1 { font-size: 96px; }
@@ -36,13 +37,13 @@ H3 { font-size: 64px; }
 
 TD, TH {
     border: 1px solid black;
-    padding: 10px 20px;
+    padding: 10px 5px;
 }
 
-A { COLOR: AQUA; }
-A:VISITED { COLOR: MEDIUMSLATEBLUE; }
-
 /* class styles */
+A:NOT(.NORMAL) { COLOR: AQUA; }
+A:VISITED:NOT(.NORMAL) { COLOR: MEDIUMSLATEBLUE; }
+
 BODY.BG-1 {
     background-image: url("/static/r-eyecatch.jpg");
     background-repeat: repeat;
@@ -56,16 +57,13 @@ BODY.BG-2 {
 
 .WIDETABLE { width: 15% }
 
-.FLEX {
-    display: flex;
-    justify-content: center;
-}
-
+.FLEX { display: flex; }
+.FLEX-CENTRE { justify-content: center; }
+.FLEX-AROUND { justify-content: space-around; }
 .FLEX-CHILD {
     flex-shrink: 1;
     flex-basis: content;
 }
-
 .FLEX-GROW { flex-grow: 1; }
 
 .CENTRE { text-align: center; }
@@ -89,6 +87,7 @@ DIV.PARA > P, DIV.PARA > SPAN {
 .C-PINK { color: hotpink; }
 .C-BLUE { color: cyan; }
 .C-GREEN { color: lime; }
+.BLEND { mix-blend-mode: exclusion; }
 
 .REVIEW-CONTAINER {}
 
@@ -97,6 +96,19 @@ DIV.PARA > P, DIV.PARA > SPAN {
     margin: auto;
     background-color: black;
     padding: 20px;
+    color: white;
+    text-align: justify;
+}
+
+.REVIEW > P {
+    /* unreset this */
+    margin-top: 36px;
+    line-height: 120%;
+}
+
+.REVIEW > IMG.INLINE {
+    margin: auto;
+    margin-top: 16px;
 }
 
 .U { text-decoration: UNDERLINE; }

@@ -11,18 +11,9 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
-# setup directory code, don't edit this
-CURRENT_DIR = Path.cwd()
-OUT_DIR = CURRENT_DIR / "out"
-TEMPLATE_DIR = CURRENT_DIR / "templates"
-
-OUT_DIR.mkdir(exist_ok=True)
-
-for f in OUT_DIR.iterdir():
-    try:
-        shutil.rmtree(f)
-    except NotADirectoryError:
-        os.remove(f)
+from makeup import OUT_DIR, TEMPLATE_DIR, CURRENT_DIR
+from makeup.helpers import setup_helpers
+from makeup.sailor import setup_sailor
 
 ## Global Defines ##
 
@@ -38,12 +29,12 @@ SERIES = [
 #: The list of root files, under templates/, to generate output files for.
 ROOT_FILES = [
     "index.html",
-    "watch_guide.html"
 ]
 
 #: The list of directories to recursively scan for .html files to compile.
 SCAN_DIRECTORIES = [
-    "reviews"
+    "reviews",
+    "content",
 ]
 
 ## Processing code ##
@@ -51,29 +42,6 @@ SCAN_DIRECTORIES = [
 requested_static_files = [
     (Path("static"), Path("static")),
 ]
-
-
-def raise_helper(msg):
-    raise Exception(msg)
-
-
-# noinspection PyShadowingNames
-def include_static_helper(relative_dir, path: str):
-    """
-    Includes a static file or directory in the built output. This is relative to the compiled
-    template (which is defined statically, not dynamically)'s relative parent directory
-
-    If you need to include files globally, put them in the ``/static`` directory.
-
-    This function returns the relativised filename, to allow doing things like e.g.
-    ``<img src="{{ include_static("screenshot.png") }}>``.
-    """
-
-    web_path = relative_dir / path
-    real_path = TEMPLATE_DIR / web_path
-
-    requested_static_files.append((real_path, web_path))
-    return requested_static_files
 
 
 def build_root(env: Environment):
@@ -97,6 +65,9 @@ def build_recursively(env: Environment):
         for root, _, files in os.walk(path):
             root = Path(root)
             for file in files:
+                if os.path.isdir(file):
+                    continue
+
                 # skip meta-files, such as macros or templates
                 if file.startswith("_"):
                     continue
@@ -106,13 +77,16 @@ def build_recursively(env: Environment):
                 out_path = OUT_DIR / inter_path
                 out_path.parent.mkdir(parents=True, exist_ok=True)
 
-                # create inclusion helper
-                fn = partial(include_static_helper, inter_path.parent)
+                if not file.endswith(".html") and not file.endswith(".jinja2"):
+                    # file that should be included statically, just directly copy it
+                    print(f"copy: {full_path} -> {out_path}")
+                    shutil.copy2(full_path, out_path)
 
-                print(f"recursively rendering: {str(full_path)} -> {out_path}")
-                templ = env.get_template(str(inter_path))
-                rendered = templ.render(include_static=fn)
-                out_path.write_text(rendered)
+                else:
+                    print(f"recursively rendering: {str(full_path)} -> {out_path}")
+                    templ = env.get_template(str(inter_path))
+                    rendered = templ.render()
+                    out_path.write_text(rendered)
 
 
 # copy static files
@@ -122,6 +96,8 @@ def copy_static_files():
 
         if not input.is_absolute():
             input = CURRENT_DIR / input
+
+        output.parent.mkdir(parents=True, exist_ok=True)
 
         print(f"copy: {input.relative_to(CURRENT_DIR)} -> {output.relative_to(CURRENT_DIR)}")
         if input.is_dir():
@@ -133,11 +109,20 @@ def copy_static_files():
 
 
 def main():
+    # setup directory code, don't edit this
+    OUT_DIR.mkdir(exist_ok=True)
+
+    for f in OUT_DIR.iterdir():
+        try:
+            shutil.rmtree(f)
+        except NotADirectoryError:
+            os.remove(f)
+
     before = time.monotonic()
 
     env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
-    env.globals["raise"] = raise_helper
-    env.globals["current_date"] = datetime.datetime.utcnow().strftime("%-d %B, %Y, %-I:%M %p")
+    setup_helpers(env)
+    setup_sailor(env)
 
     build_root(env)
     build_recursively(env)

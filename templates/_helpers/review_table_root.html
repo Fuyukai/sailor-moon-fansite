@@ -1,0 +1,81 @@
+{% extends "_root.html" %}
+
+
+{% block customhead %}
+
+{% endblock %}
+
+{% block body %}
+<h1 class="C-PINK" style="font-size: 5vw;">Sailor Moon {{ id_to_title(series_id) }} - Episode Reviews</h1>
+
+{# gross switchy navbar... #}
+<nav style="font-size: 90%">
+    {% if series_id == "classic" %}
+    <span class="C-PINK">Sailor Moon Classic</span>
+    {% else %}
+    <a href="/reviews/classic/">Sailor Moon Classic</a>
+    {% endif %}
+    <i class="bi bi-arrow-right C-WHITE"></i>
+    {% if series_id == "romance" %}
+    <span class="C-PINK">Sailor Moon R</span>
+    {% else %}
+    <a href="/reviews/romance/">Sailor Moon R</a>
+    {% endif %}
+    <i class="bi bi-arrow-right C-WHITE"></i>
+    {% if series_id == "super" %}
+    <span class="C-PINK">Sailor Moon S</span>
+    {% else %}
+    <a href="/reviews/super/">Sailor Moon S</a>
+    {% endif %}
+    <i class="bi bi-arrow-right C-WHITE"></i>
+    {% if series_id == "supers" %}
+    <span class="C-PINK">Sailor Moon SuperS</span>
+    {% else %}
+    <a href="/reviews/supers/">Sailor Moon SuperS</a>
+    {% endif %}
+    <i class="bi bi-arrow-right C-WHITE"></i>
+    {% if series_id == "stars" %}
+    <span class="C-PINK">Sailor Moon Sailor Stars</span>
+    {% else %}
+    <a href="/reviews/stars/">Sailor Moon Sailor Stars</a>
+    {% endif %}
+</nav>
+<hr/>
+
+<div class="C-WHITE BLEND">
+{% block description %}
+No series description provided.
+{% endblock %}
+</div>
+<hr/>
+
+<TABLE STYLE="BACKGROUND-COLOR: WHITE">
+    <THEAD>
+    <TR>
+        <TH STYLE="TEXT-ALIGN: CENTER; BACKGROUND-COLOR: BLACK; COLOR: WHITE;">#</TH>
+        <TH><SPAN STYLE="COLOR: HOTPINK">Title</SPAN></TH>
+        <TH><SPAN STYLE="COLOR: GREEN">Preview Image</SPAN></TH>
+        <TH STYLE="COLOR: FUCHSIA">Ratings</TH>
+        <TH>Synopsis</TH>
+        <TH>Review</TH>
+        <TH>Recommendation</TH>
+    </TR>
+    </THEAD>
+    <TBODY>
+    {% set eps = episode_ranges(series_id) %}
+    {% for ep in eps %}
+    {% set s_num = "{:03d}".format(ep) %}
+    {% set path = "reviews/classic/ep" + s_num %}
+    {% if file_exists(path) %}
+    <TR ID="ROW-{{ s_num }}">
+        {% include path + "/_table.html" %}
+    </TR>
+    {% endif %}
+    {% endfor %}
+    </TBODY>
+</TABLE>
+<hr/>
+<a href="#">Jump to Top</a>
+<hr/>
+
+{% endblock %}
