@@ -11,11 +11,11 @@
     reading these - and don't read reviews for episodes you haven't watched!
 </p>
 
-{% for row in per_dir["classic"] %}
+{#{% for row in per_dir["classic"] %}
 <TR>
     {% include "reviews/classic/" + row %}
 </TR>
-{% endfor %}
+{% endfor %}#}
 {{ super() }}
 
 {% endblock %}

@@ -4,13 +4,13 @@
 }
 
 /* blink polyfill as these IDIOTS removed th eblink tag */
-blink {
-  animation: 2s linear infinite condemned_blink_effect;
+.BLINK {
+  animation: 2s steps(1) infinite condemned_blink_effect;
 }
 
 @keyframes condemned_blink_effect {
   0% {
-    visibility: hidden;
+    visibility: visible;
   }
   50% {
     visibility: hidden;
@@ -20,6 +20,7 @@ blink {
   }
 }
 
+/* hard styles */
 BODY {
     /** use TNR if available, otherwise Heuristica looks pretty close */
     font-family: "Times New Roman", "Heuristica";
@@ -29,6 +30,19 @@ BODY {
     font-size: 36px;
 }
 
+H1 { font-size: 96px; }
+H2 { font-size: 78px; }
+H3 { font-size: 64px; }
+
+TD, TH {
+    border: 1px solid black;
+    padding: 10px 20px;
+}
+
+A { COLOR: AQUA; }
+A:VISITED { COLOR: MEDIUMSLATEBLUE; }
+
+/* class styles */
 BODY.BG-1 {
     background-image: url("/static/r-eyecatch.jpg");
     background-repeat: repeat;
@@ -37,35 +51,44 @@ BODY.BG-1 {
 BODY.BG-2 {
     background-image: url("/static/stars-title.jpg");
     background-repeat: repeat;
-}
-
-H1 { font-size: 96px; }
-H2 { font-size: 78px; }
-
-TD, TH {
-    border: 1px solid black;
-    padding: 10px 20px;
+    background-size: 15%;
 }
 
 .WIDETABLE { width: 15% }
 
 .FLEX {
     display: flex;
-    justify-content: around;
+    justify-content: center;
 }
 
 .FLEX-CHILD {
-    flex-grow: 1;
     flex-shrink: 1;
     flex-basis: content;
 }
 
+.FLEX-GROW { flex-grow: 1; }
+
 .CENTRE { text-align: center; }
 
-.RED {
-    color: red;
-    background-color: blue;
+DIV.PARA {
+    color: white; text-align: center;
 }
+
+DIV.PARA > P, DIV.PARA > SPAN {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 10px;
+    -webkit-text-stroke: 1px;
+    mix-blend-mode: exclusion;
+}
+
+/* colour classes */
+.C-WHITE { color: white; }
+.C-RED { color: red; }
+.C-PINK { color: hotpink; }
+.C-BLUE { color: cyan; }
+.C-GREEN { color: lime; }
 
 .REVIEW-CONTAINER {}
 
@@ -76,4 +99,9 @@ TD, TH {
     padding: 20px;
 }
 
-SPAN.S { TEXT-DECORATION: LINE-THROUGH; }
+.U { text-decoration: UNDERLINE; }
+.S { text-decoration: LINE-THROUGH; }
+
+UL.CIRCLE {
+    list-style-type: disc;
+}

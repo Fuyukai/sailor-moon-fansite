@@ -1,14 +1,32 @@
 """
 Makes up the static website.
 """
+import datetime
 import os
 import shutil
 import time
+from functools import partial
 from pathlib import Path
+from stat import S_ISDIR
 
 from jinja2 import Environment, FileSystemLoader
 
-# global defines
+# setup directory code, don't edit this
+CURRENT_DIR = Path.cwd()
+OUT_DIR = CURRENT_DIR / "out"
+TEMPLATE_DIR = CURRENT_DIR / "templates"
+
+OUT_DIR.mkdir(exist_ok=True)
+
+for f in OUT_DIR.iterdir():
+    try:
+        shutil.rmtree(f)
+    except NotADirectoryError:
+        os.remove(f)
+
+## Global Defines ##
+
+#: List of series to process reviews for.
 SERIES = [
     "classic",
     "r",
@@ -17,55 +35,113 @@ SERIES = [
     "stars",
 ]
 
-# set up directories
-our_path = Path.cwd()
-out_dir = our_path / "out"
-shutil.rmtree(out_dir, ignore_errors=True)
-out_dir.mkdir()
+#: The list of root files, under templates/, to generate output files for.
+ROOT_FILES = [
+    "index.html",
+    "watch_guide.html"
+]
+
+#: The list of directories to recursively scan for .html files to compile.
+SCAN_DIRECTORIES = [
+    "reviews"
+]
+
+## Processing code ##
+# used to store the number of static files that are included when making up
+requested_static_files = [
+    (Path("static"), Path("static")),
+]
 
 
 def raise_helper(msg):
     raise Exception(msg)
 
 
-templates_dir = our_path / "templates"
-tables_dir = templates_dir / "tables"
+# noinspection PyShadowingNames
+def include_static_helper(relative_dir, path: str):
+    """
+    Includes a static file or directory in the built output. This is relative to the compiled
+    template (which is defined statically, not dynamically)'s relative parent directory
 
-per_dir: dict[str, list[str]] = {k: [] for k in SERIES}
+    If you need to include files globally, put them in the ``/static`` directory.
 
-for d in tables_dir.iterdir():
-    if not os.path.isdir(d):
-        continue
+    This function returns the relativised filename, to allow doing things like e.g.
+    ``<img src="{{ include_static("screenshot.png") }}>``.
+    """
 
-    for file in d.iterdir():
-        if not file.name.startswith("ep"):
-            continue
+    web_path = relative_dir / path
+    real_path = TEMPLATE_DIR / web_path
 
-        per_dir[d.name].append(str(file.name))
+    requested_static_files.append((real_path, web_path))
+    return requested_static_files
 
-    # lol
-    per_dir[d.name].sort(key=lambda it: int(it[-8:-5]))
 
 before = time.monotonic()
-env = Environment(loader=FileSystemLoader(str(templates_dir)))
+
+env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
 env.globals["raise"] = raise_helper
-env.globals["per_dir"] = per_dir
-template = env.get_template("content.html")
-data = template.render()
+env.globals["current_date"] = datetime.datetime.utcnow().strftime("%-d %B, %Y, %-I:%M %p")
 
-(out_dir / "index.html").write_text(data)
 
-reviews_path = our_path / "templates" / "reviews"
-reviews_out = out_dir / "reviews"
-reviews_out.mkdir()
+def build_root():
+    for file in ROOT_FILES:
+        # for files in subdirectories, e.g. `pages/something.html`, make sure the output directory
+        # even exists.
+        file_output_path = OUT_DIR / file
+        file_output_path.parent.mkdir(parents=True, exist_ok=True)
+        template = env.get_template(str(file))
+        rendered = template.render()
 
-for f in reviews_path.iterdir():
-    if not f.name.startswith("_") and f.name.endswith(".html"):
-        template = env.get_template(f"reviews/{f.name}")
-        data = template.render()
-        (reviews_out / f.name).write_text(data)
+        file_output_path.write_text(rendered)
 
-shutil.copytree(our_path / "static", out_dir / "static")
+
+# build files recursively
+def build_recursively():
+    for dirname in SCAN_DIRECTORIES:
+        dir = Path(dirname)
+        path = TEMPLATE_DIR / dir
+
+        for root, _, files in os.walk(path):
+            root = Path(root)
+            for file in files:
+                # skip meta-files, such as macros or templates
+                if file.startswith("_"):
+                    continue
+
+                full_path = root / file
+                inter_path = full_path.relative_to(TEMPLATE_DIR)
+                out_path = OUT_DIR / inter_path
+                out_path.parent.mkdir(parents=True, exist_ok=True)
+
+                # create inclusion helper
+                fn = partial(include_static_helper, inter_path.parent)
+
+                print(f"recursively rendering: {str(full_path)} -> {out_path}")
+                templ = env.get_template(str(inter_path))
+                rendered = templ.render(include_static=fn)
+                out_path.write_text(rendered)
+
+
+# copy static files
+def copy_static_files():
+    for input, output in requested_static_files:
+        output = OUT_DIR / Path(output)
+
+        if not input.is_absolute():
+            input = CURRENT_DIR / input
+
+        print(f"copy: {input.relative_to(CURRENT_DIR)} -> {output.relative_to(CURRENT_DIR)}")
+        if input.is_dir():
+            pass
+            shutil.copytree(input, output)
+        else:
+            pass
+            shutil.copy2(input, output)
+
+
+build_root()
+build_recursively()
+copy_static_files()
 
 after = time.monotonic()
 

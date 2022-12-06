@@ -1,0 +1,91 @@
+{% extends "_root.html" %}
+
+{% block customhead %}
+<script src="/static/date.js"></script>
+{% endblock %}
+
+{% block body %}
+<H1 STYLE="COLOR: FUCHSIA">
+    <MARQUEE SCROLLAMOUNT="32">Lura's Sailor Moon Fansite!</MARQUEE>
+</H1>
+<P>
+    <A HREF="https://archive.org/details/netscape-navigator-3.0-personal-edition">
+        <IMG SRC="/static/netscape.gif" HEIGHT="50" WIDTH="142"  STYLE="FLOAT: LEFT">
+    </A>
+    <A HREF="https://winworldpc.com/product/internet-explorer/ie-4">
+        <IMG SRC="/static/bvw-ie-4x.gif" HEIGHT="50" WIDTH="142">
+    </A>
+    <IMG SRC="https://licensebuttons.net/l/by-sa/4.0/88x31.png" HEIGHT="50" WIDTH="152">
+</P>
+<DIV CLASS="FLEX">
+    <DIV CLASS="FLEX-CHILD">
+    <IMG src="/static/gifs/slrm_logo.gif" HEIGHT="116" WIDTH="190">
+    </DIV>
+    <DIV CLASS="FLEX-CHILD">
+    <IMG SRC="/static/gifs/smwind.gif" HEIGHT="148" WIDTH="195"
+         ONCLICK="toggleBg();">
+    </DIV>
+    <DIV CLASS="FLEX-CHILD">
+    <IMG src="/static/gifs/bunnycryin.gif">
+    </DIV>
+</DIV>
+
+<DIV CLASS="PARA">
+    <P>Welcome to my Sailor Moon fansite!</P>
+</DIV>
+
+<DIV CLASS="PARA">
+    <P>
+    You're viewing this website on the <SPAN ID="DATE-TAG" CLASS="C-PINK BLINK">{{ current_date }}</SPAN>!
+    </P>
+</DIV>
+<DIV CLASS="PARA">
+    <P>
+        This is where I will put all my content related to Sailor Moon, my favourite show in
+        the world!
+    </P>
+</DIV>
+
+<DIV CLASS="FLEX" STYLE="MARGIN: 5%">
+    <DIV CLASS="FLEX-CHILD FLEX-GROW">
+        <h3 class="U C-PINK CENTRE">My Reviews</h3>
+        <UL CLASS="CIRCLE C-WHITE"
+            STYLE="padding-top: 5px; padding-bottom: 5px; margin-top: 8px"
+        >
+            <LI>
+                <A HREF="/reviews/classic.html">Sailor Moon Classic</A>
+            </LI>
+            <LI>
+                <A HREF="/reviews/romance.html">Sailor Moon R</A>
+            </LI>
+            <LI>
+                <A HREF="/reviews/super.html">Sailor Moon S</A>
+            </LI>
+            <LI>
+                <A HREF="/reviews/supers.html">Sailor Moon SuperS</A>
+            </LI>
+            <LI>
+                <A HREF="/reviews/stars.html">Sailor Moon Sailor Stars</A>
+            </LI>
+        </UL>
+    </DIV>
+    <DIV CLASS="FLEX-CHILD FLEX-GROW">
+        <h3 class="U C-PINK CENTRE">My Essays</h3>
+        <p class="C-WHITE" style=" margin-top: 8px">Nothing here yet...</p>
+    </DIV>
+    <DIV CLASS="FLEX-CHILD FLEX-GROW">
+        <h3 class="U C-PINK CENTRE">My Other Content</h3>
+        <UL CLASS="CIRCLE C-WHITE CENTRE"
+            STYLE="padding-top: 5px; padding-bottom: 5px; margin-top: 8px"
+        >
+            <LI>
+                <A HREF="/content/watch_guide.html">Understanding the reviews</A>
+            </LI>
+        </UL>
+    </DIV>
+</DIV>
+
+<SCRIPT>
+    applyDate(document.getElementById("DATE-TAG"));
+</SCRIPT>
+{% endblock %}

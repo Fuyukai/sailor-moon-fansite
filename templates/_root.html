@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-{## The root HTML template used for the website. ##}
+{# The base template used by all pages. #}
 <HTML>
 <HEAD>
 <META CHARSET="utf-8">
 <META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
-<META NAME="description" CONTENT="Lura's Sailor Moon Watch Guide">
+<META NAME="description" CONTENT="Lura's Sailor Moon Fan Site">
 <META name="color-scheme" CONTENT="only light">
 
-<TITLE>LURA'S SAILOR MOON WATCH GUIDE!!!</TITLE>
+<TITLE>LURA'S SAILOR MOON FANSITE!!!</TITLE>
+<LINK REL="stylesheet" HREF="/static/reset.css">
 <LINK REL="stylesheet" HREF="/static/style.css">
 <LINK REL="stylesheet" HREF="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 
@@ -30,10 +31,11 @@
 {% block body required %}
 
 {% endblock %}
+
 <footer style="color: white; background-color: black">
     <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
         <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
-    <br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+    <br/>This work is licensed under a <a class="LICENCE" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
     Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 </footer>
 </BODY>
