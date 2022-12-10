@@ -16,7 +16,7 @@ REVIEW_TEMPLATE = """{% extends "_helpers/review.html" %}
 {% endblock %}
 """
 
-TABLE_TEMPLATE = """{% extends "tables/classic/_base.html" %}
+TABLE_TEMPLATE = """{% extends "_helpers/review_table_row.html" %}
 
 {% set number = <num> %}
 {% set my_rating = raise("unset") %}
