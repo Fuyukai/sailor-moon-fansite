@@ -87,6 +87,7 @@ DIV.PARA > P, DIV.PARA > SPAN {
 .C-PINK { color: hotpink; }
 .C-BLUE { color: cyan; }
 .C-GREEN { color: lime; }
+.C-YELLOW { color: gold; }
 .BLEND { mix-blend-mode: exclusion; }
 
 .REVIEW-CONTAINER {}
@@ -106,7 +107,7 @@ DIV.PARA > P, DIV.PARA > SPAN {
     line-height: 120%;
 }
 
-.REVIEW > IMG.INLINE {
+.REVIEW-OUTER > IMG.INLINE {
     margin: auto;
     margin-top: 16px;
 }
