@@ -107,7 +107,7 @@ DIV.PARA > P, DIV.PARA > SPAN {
     line-height: 120%;
 }
 
-.REVIEW-OUTER > IMG.INLINE {
+.REVIEW-OUTER IMG.INLINE {
     margin: auto;
     margin-top: 16px;
 }

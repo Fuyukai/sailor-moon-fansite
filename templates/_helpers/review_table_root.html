@@ -49,7 +49,9 @@ No series description provided.
 </div>
 <hr/>
 
-<TABLE STYLE="BACKGROUND-COLOR: WHITE">
+<p>Average score: <span id="score"></span></p>
+
+<TABLE STYLE="BACKGROUND-COLOR: WHITE" ID="THE-TABLE">
     <THEAD>
     <TR>
         <TH STYLE="TEXT-ALIGN: CENTER; BACKGROUND-COLOR: BLACK; COLOR: WHITE;">#</TH>
@@ -65,7 +67,7 @@ No series description provided.
     {% set eps = episode_ranges(series_id) %}
     {% for ep in eps %}
     {% set s_num = "{:03d}".format(ep) %}
-    {% set path = "reviews/classic/ep" + s_num %}
+    {% set path = "reviews/" + series_id + "/ep" + s_num %}
     {% if file_exists(path) %}
     <TR ID="ROW-{{ s_num }}">
         {% include path + "/_table.html" %}
