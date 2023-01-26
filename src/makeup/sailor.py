@@ -65,6 +65,29 @@ def episode_ranges(series: str) -> range:
     raise ValueError(f"Unknown series: {series}")
 
 
+def relative_number(number: int) -> int:
+    """
+    Gets the season-relative number, as opposed to the absolute number.
+    """
+
+    if 0 < number <= 46:
+        return number
+
+    elif 46 < number <= 90:
+        return number - 46
+
+    elif 90 < number <= 127:
+        return number - 90
+
+    elif 127 < number <= 165:
+        return number - 127
+
+    elif number <= 200:
+        return number - 165
+
+    raise ValueError(f"invalid episode number: {number}")
+
+
 def id_for_ep(number: int) -> str:
     if 0 < number <= 46:
         return "classic"
@@ -89,3 +112,4 @@ def setup_sailor(env: Environment):
     env.globals["id_to_title"] = id_to_title
     env.globals["id_for_ep"] = id_for_ep
     env.globals["episode_ranges"] = episode_ranges
+    env.globals["relative_number"] = relative_number

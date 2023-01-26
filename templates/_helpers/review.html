@@ -6,19 +6,23 @@
 {% block body %}
 {% set series_name = id_to_title(series_id) %}
 {% set s_num = "{:03d}".format(number) %}
+{% set rel_num = relative_number(number) %}
+{% set rel_s_num = "{:03d}".format(rel_num) %}
 
 <nav>
 <div class="FLEX FLEX-AROUND">
     {% if number > 1 %}
     {% set prev_num = number - 1 %}
     {% set prev_s_num = "{:03d}".format(prev_num) %}
+    {% set prev_rel_num = relative_number(number - 1) %}
+    {% set prev_s_rel_num = "{:03d}".format(prev_rel_num) %}
     {% set prev_series_id = id_for_ep(prev_num) %}
     {% set prev_series = id_to_title(prev_series_id) %}
 
     <div class="FLEX-CHILD">
         <span class="C-WHITE">{{ prev_series }}</span>
         <a href="/reviews/{{ prev_series_id }}/ep{{ prev_s_num }}/">
-            Episode {{ prev_s_num }}
+            Episode {{ prev_s_rel_num }} {% if prev_num != prev_rel_num %} ({{ prev_s_num }}) {% endif %}
         </a>
     </div>
 
@@ -33,7 +37,8 @@
     </div>
 
     <div class="FLEX-CHILD">
-        <span class="C-PINK">{{ series_name }} Episode {{ s_num }}</span>
+        <span class="C-PINK">{{ series_name }} Episode {{ rel_s_num }}
+            {% if rel_num != number %} ({{ s_num }}) {% endif %}</span>
     </div>
 
     <div class="FLEX-CHILD">
@@ -43,6 +48,8 @@
     {% if number < 200 %}
     {% set next_num = number + 1 %}
     {% set next_s_num = "{:03d}".format(next_num) %}
+    {% set next_rel_num = relative_number(number + 1) %}
+    {% set next_s_rel_num = "{:03d}".format(next_rel_num) %}
     {% set next_series_id = id_for_ep(next_num) %}
     {% set next_series = id_to_title(next_series_id) %}
 
@@ -51,13 +58,13 @@
     <div class="FLEX-CHILD">
         <span class="C-WHITE">{{ next_series }}</span>
         <a href="/{{ next_path }}">
-            Episode {{ next_s_num }}
+            Episode {{ next_s_rel_num }} {% if next_num != next_rel_num %} ({{ next_s_num }}) {% endif %}
         </a>
     </div>
     {% else %}
     <div class="FLEX-CHILD">
         <span class="C-WHITE">{{ next_series }}</span>
-        <span class="C-RED">Episode {{ next_s_num }}</span>
+        <span class="C-RED">Episode {{ next_s_rel_num }} ({{ next_s_num }})</span>
     </div>
     {% endif %}
 
