@@ -6,6 +6,7 @@ import datetime
 import os
 import shutil
 import time
+import zoneinfo
 from functools import partial
 from pathlib import Path
 
@@ -77,6 +78,9 @@ def build_recursively(env: Environment):
                 out_path = OUT_DIR / inter_path
                 out_path.parent.mkdir(parents=True, exist_ok=True)
 
+                filetime = full_path.stat().st_mtime
+                date = datetime.datetime.fromtimestamp(filetime, tz=zoneinfo.ZoneInfo("UTC"))
+
                 if not file.endswith(".html") and not file.endswith(".jinja2"):
                     # file that should be included statically, just directly copy it
                     print(f"copy: {full_path} -> {out_path}")
@@ -85,7 +89,7 @@ def build_recursively(env: Environment):
                 else:
                     print(f"recursively rendering: {str(full_path)} -> {out_path}")
                     templ = env.get_template(str(inter_path))
-                    rendered = templ.render()
+                    rendered = templ.render(file_date=date)
                     out_path.write_text(rendered)
 
 

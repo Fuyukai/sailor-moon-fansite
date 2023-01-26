@@ -71,7 +71,12 @@
 <hr/>
 
 <h1 class="C-PINK CENTRE" style="font-size: 4vw;">{{ titles[number - 1] }}</h1>
-<a href="/reviews/{{ series_id }}#ROW-{{ s_num }}">Back to the Reviews Page</a>
+<DIV CLASS="FLEX FLEX-AROUND">
+<a class="FLEX-CHILD" href="/reviews/{{ series_id }}#ROW-{{ s_num }}">Back to the Reviews Page</a>
+<span style="color: white; text-align: right;" class="FLEX-CHILD">
+    Last modified: {{ file_date.strftime("%A %d %B, %Y at %H:%M:%S") }}
+</span>
+</DIV>
 <hr/>
 
 <DIV CLASS="REVIEW-OUTER">
