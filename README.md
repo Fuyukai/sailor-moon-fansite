@@ -8,7 +8,7 @@ This is the raw source code for my website that I made in 1998.
 
 ```fish
 $ poetry install
-$ poetry run python makeup.py
+$ poetry run python -m makeup
 ```
 
 Copy the ``out/`` directory into a website somewhere.
