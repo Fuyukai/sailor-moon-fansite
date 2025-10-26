@@ -2,8 +2,9 @@
 Sailor-specific extensions.
 """
 
-from makeup import CURRENT_DIR, TEMPLATE_DIR, OUT_DIR
 from jinja2 import Environment
+
+from makeup import TEMPLATE_DIR
 
 REVIEWS_DIR = TEMPLATE_DIR / "reviews"
 
@@ -14,10 +15,10 @@ def title_to_id(series: str) -> str:
     if lower == "sailor stars":
         return "stars"
 
-    elif lower == "r":
+    if lower == "r":
         return "romance"
 
-    elif lower == "s":
+    if lower == "s":
         return "super"
 
     return lower
@@ -27,17 +28,16 @@ def id_to_title(id: str) -> str:
     if id == "romance":
         return "R"
 
-    elif id == "super":
+    if id == "super":
         return "S"
 
-    elif id == "supers":
+    if id == "supers":
         return "SuperS"
 
-    elif id == "stars":
+    if id == "stars":
         return "Sailor Stars"
 
-    else:
-        return id.title()
+    return id.title()
 
 
 def episode_ranges(series: str) -> range:
@@ -61,8 +61,9 @@ def episode_ranges(series: str) -> range:
 
         case "stars":
             return range(166, 200)
-
-    raise ValueError(f"Unknown series: {series}")
+        
+        case _:
+            raise ValueError(f"Unknown series: {series}")
 
 
 def relative_number(number: int) -> int:
@@ -73,16 +74,16 @@ def relative_number(number: int) -> int:
     if 0 < number <= 46:
         return number
 
-    elif 46 < number <= 90:
+    if 46 < number <= 90:
         return number - 46
 
-    elif 90 < number <= 127:
+    if 90 < number <= 127:
         return number - 90
 
-    elif 127 < number <= 165:
+    if 127 < number <= 165:
         return number - 127
 
-    elif number <= 200:
+    if number <= 200:
         return number - 165
 
     raise ValueError(f"invalid episode number: {number}")
@@ -92,16 +93,16 @@ def id_for_ep(number: int) -> str:
     if 0 < number <= 46:
         return "classic"
 
-    elif 46 < number <= 90:
+    if 46 < number <= 90:
         return "romance"
 
-    elif 90 < number <= 127:
+    if 90 < number <= 127:
         return "super"
 
-    elif 127 < number <= 165:
+    if 127 < number <= 165:
         return "supers"
 
-    elif number <= 200:
+    if number <= 200:
         return "stars"
 
     raise ValueError(f"invalid episode number: {number}")

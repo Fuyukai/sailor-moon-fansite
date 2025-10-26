@@ -7,16 +7,15 @@ import os
 import shutil
 import time
 import zoneinfo
-from functools import partial
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
-from makeup import OUT_DIR, TEMPLATE_DIR, CURRENT_DIR
+from makeup import CURRENT_DIR, OUT_DIR, TEMPLATE_DIR
 from makeup.helpers import setup_helpers
 from makeup.sailor import setup_sailor
 
-## Global Defines ##
+# Global Defines ##
 
 #: List of series to process reviews for.
 SERIES = [
@@ -38,7 +37,7 @@ SCAN_DIRECTORIES = [
     "content",
 ]
 
-## Processing code ##
+# Processing code ##
 # used to store the number of static files that are included when making up
 requested_static_files = [
     (Path("static"), Path("static")),
@@ -87,7 +86,7 @@ def build_recursively(env: Environment):
                     shutil.copy2(full_path, out_path)
 
                 else:
-                    print(f"recursively rendering: {str(full_path)} -> {out_path}")
+                    print(f"recursively rendering: {full_path!s} -> {out_path}")
                     templ = env.get_template(str(inter_path))
                     rendered = templ.render(file_date=date)
                     out_path.write_text(rendered)
@@ -105,10 +104,8 @@ def copy_static_files():
 
         print(f"copy: {input.relative_to(CURRENT_DIR)} -> {output.relative_to(CURRENT_DIR)}")
         if input.is_dir():
-            pass
             shutil.copytree(input, output)
         else:
-            pass
             shutil.copy2(input, output)
 
 
@@ -137,4 +134,5 @@ def main():
     print(f"built, took {after - before:.04f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()

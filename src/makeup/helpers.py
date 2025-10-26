@@ -1,7 +1,9 @@
 """
 A set of Jinja2 related helpers.
 """
-from datetime import datetime
+
+from datetime import UTC, datetime
+from typing import NoReturn
 
 from jinja2 import Environment
 
@@ -16,11 +18,11 @@ def file_exists(relative_path: str) -> bool:
     return (TEMPLATE_DIR / relative_path).exists()
 
 
-def raise_helper(msg):
+def raise_helper(msg: str) -> NoReturn:
     raise Exception(msg)
 
 
 def setup_helpers(env: Environment):
     env.globals["file_exists"] = file_exists
     env.globals["raise"] = raise_helper
-    env.globals["current_date"] = datetime.utcnow().strftime("%-d %B, %Y, %-I:%M %p")
+    env.globals["current_date"] = datetime.now(UTC).strftime("%-d %B, %Y, %-I:%M %p")

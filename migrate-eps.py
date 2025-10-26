@@ -1,6 +1,6 @@
 import shutil
 
-from makeup import TEMPLATE_DIR, CURRENT_DIR
+from makeup import CURRENT_DIR, TEMPLATE_DIR
 
 table_dir = TEMPLATE_DIR / "tables"
 tables = TEMPLATE_DIR / "tables" / "classic"
@@ -18,7 +18,7 @@ for i in tables.iterdir():
     table_data = i.read_text()
     table_data = table_data.replace(
         '{% extends "tables/classic/_base.html" %}',
-        '{% extends "_helpers/review_table_row.html" %}'
+        '{% extends "_helpers/review_table_row.html" %}',
     )
     # copy over _table
     (new_path / "_table.html").write_text(table_data)
@@ -30,20 +30,11 @@ for i in tables.iterdir():
     content = review_file.read_text(encoding="utf-8")
     new = content.replace(
         '{% from "reviews/_macros.html" import review_header, review_footer %}',
-        '{% extends "_helpers/review.html" %}'
+        '{% extends "_helpers/review.html" %}',
     )
-    new = new.replace(
-        '{{ review_header(',
-        '{% set series_id = "classic" %}\n{% set number = '
-    )
-    new = new.replace(
-        ') }}\n<',
-        ' %}\n\n{% block review %}\n<'
-    )
-    new = new.replace(
-        '{{ review_footer() }}',
-        '{% endblock %}'
-    )
+    new = new.replace("{{ review_header(", '{% set series_id = "classic" %}\n{% set number = ')
+    new = new.replace(") }}\n<", " %}\n\n{% block review %}\n<")
+    new = new.replace("{{ review_footer() }}", "{% endblock %}")
 
     review_out = new_path / "index.html"
     review_out.write_text(new)
@@ -56,4 +47,3 @@ for i in tables.iterdir():
 
     image_out = new_path / "preview.jpg"
     shutil.copy(image, image_out)
-
