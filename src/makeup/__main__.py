@@ -88,15 +88,20 @@ def build_recursively(env: Environment):
                     "--",
                     templ_path,
                 ]).decode("utf-8").strip()
-                filetime = int(
-                    subprocess.check_output([
-                        "git",
-                        "show",
-                        "-s",
-                        "--format=%ct",
-                        file_commit,
-                    ]).decode("utf-8")
-                )
+
+                if file_commit:
+                    filetime = int(
+                        subprocess.check_output([
+                            "git",
+                            "show",
+                            "-s",
+                            "--format=%ct",
+                            file_commit,
+                        ]).decode("utf-8")
+                    )
+                else:
+                    # just some junk for any file in the current working set
+                    filetime = time.time()
 
                 date = datetime.datetime.fromtimestamp(filetime, tz=zoneinfo.ZoneInfo("UTC"))
 
@@ -124,7 +129,7 @@ def copy_static_files():
 
         print(f"copy: {input.relative_to(CURRENT_DIR)} -> {output.relative_to(CURRENT_DIR)}")
         if input.is_dir():
-            shutil.copytree(input, output)
+            shutil.copytree(input, output, dirs_exist_ok=True)
         else:
             shutil.copy2(input, output)
 
@@ -132,16 +137,6 @@ def copy_static_files():
 def main():
     # setup directory code, don't edit this
     OUT_DIR.mkdir(exist_ok=True)
-
-    for f in OUT_DIR.iterdir():
-        if f.name == ".git":
-            continue
-
-        try:
-            shutil.rmtree(f)
-        except NotADirectoryError:
-            os.remove(f)
-
     before = time.monotonic()
 
     env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))

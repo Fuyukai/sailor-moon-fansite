@@ -6,40 +6,40 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="C-PINK" style="font-size: 5vw;">Sailor Moon {{ id_to_title(series_id) }} - Episode Reviews</h1>
+<H1 class="C-PINK" style="font-size: 5vw;">Sailor Moon {{ id_to_title(series_id) }} - Episode Reviews</H1>
 
 {# gross switchy navbar... #}
-<nav style="font-size: 90%">
+<NAV style="font-size: 90%">
     {% if series_id == "classic" %}
-    <span class="C-PINK">Sailor Moon Classic</span>
+    <SPAN class="C-PINK">Sailor Moon Classic</SPAN>
     {% else %}
-    <a href="/reviews/classic/">Sailor Moon Classic</a>
+    <A href="/reviews/classic/">Sailor Moon Classic</A>
     {% endif %}
-    <i class="bi bi-arrow-right C-WHITE"></i>
+    <I class="bi bi-arrow-right C-WHITE"></I>
     {% if series_id == "romance" %}
-    <span class="C-PINK">Sailor Moon R</span>
+    <SPAN class="C-PINK">Sailor Moon R</SPAN>
     {% else %}
-    <a href="/reviews/romance/">Sailor Moon R</a>
+    <A href="/reviews/romance/">Sailor Moon R</A>
     {% endif %}
-    <i class="bi bi-arrow-right C-WHITE"></i>
+    <I class="bi bi-arrow-right C-WHITE"></I>
     {% if series_id == "super" %}
-    <span class="C-PINK">Sailor Moon S</span>
+    <SPAN class="C-PINK">Sailor Moon S</SPAN>
     {% else %}
-    <a href="/reviews/super/">Sailor Moon S</a>
+    <A href="/reviews/super/">Sailor Moon S</A>
     {% endif %}
-    <i class="bi bi-arrow-right C-WHITE"></i>
+    <I class="bi bi-arrow-right C-WHITE"></I>
     {% if series_id == "supers" %}
-    <span class="C-PINK">Sailor Moon SuperS</span>
+    <SPAN class="C-PINK">Sailor Moon SuperS</SPAN>
     {% else %}
-    <a href="/reviews/supers/">Sailor Moon SuperS</a>
+    <A href="/reviews/supers/">Sailor Moon SuperS</A>
     {% endif %}
-    <i class="bi bi-arrow-right C-WHITE"></i>
+    <I class="bi bi-arrow-right C-WHITE"></I>
     {% if series_id == "stars" %}
-    <span class="C-PINK">Sailor Moon Sailor Stars</span>
+    <SPAN class="C-PINK">Sailor Moon Sailor Stars</SPAN>
     {% else %}
-    <a href="/reviews/stars/">Sailor Moon Sailor Stars</a>
+    <A href="/reviews/stars/">Sailor Moon Sailor Stars</A>
     {% endif %}
-</nav>
+</NAV>
 <hr/>
 
 <div class="C-WHITE BLEND">
@@ -49,7 +49,7 @@ No series description provided.
 </div>
 <hr/>
 
-<p>Average score: <span id="score"></span></p>
+<p>Average score: <SPAN id="score"></SPAN></p>
 
 <TABLE STYLE="BACKGROUND-COLOR: WHITE" ID="THE-TABLE">
     <THEAD>
@@ -77,7 +77,22 @@ No series description provided.
     </TBODY>
 </TABLE>
 <hr/>
-<a href="#">Jump to Top</a>
+<A href="#">Jump to Top<A>
 <hr/>
+
+<SCRIPT>
+// gotta start at 1 otherwise the first image is "swapped" in
+let counter = 1;
+setInterval(() => {
+    for (const el of document.getElementsByClassName("IMAGE-ROTATION-CONTAINER")) {
+        let selected = counter % el.children.length;
+        for (const child of el.children) {
+            child.classList.add("HIDDEN");
+        }
+        el.children[selected].classList.remove("HIDDEN");
+    }
+    counter += 1;
+}, 2000);
+</SCRIPT>
 
 {% endblock %}

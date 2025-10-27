@@ -43,7 +43,18 @@ series_id is defined by the review_table extension.
 <TD><SPAN>{{ s_number }}</SPAN></TD>
 <TD>{{ title }}</TD>
 <TD CLASS="WIDETABLE">
+    {% if image_count|default(1) == 1 %}
     <IMG SRC="ep{{ s_number }}/preview.jpg">
+    {% else %}
+
+    <DIV CLASS="IMAGE-ROTATION-CONTAINER">
+    <IMG SRC="ep{{ s_number }}/preview-0.jpg">
+    {% for idx in range(image_count - 1) %}
+    <IMG SRC="ep{{ s_number}}/preview-{{ idx + 1 }}.jpg" CLASS="HIDDEN">
+    {% endfor %}
+    </DIV>
+
+    {% endif %}
 </TD>
 <TD CLASS="CENTRE WIDETABLE" data-rating="{{ my_rating }}">
     {% if my_rating >= 3 %}

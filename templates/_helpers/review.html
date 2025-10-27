@@ -88,7 +88,15 @@
 
 <DIV CLASS="REVIEW-OUTER">
 {% block review_image %}
+{% if image_count|default(1) == 1 %}
 <IMG SRC="preview.jpg" height="405" width="540" style="margin: auto">
+{% else %}
+<DIV CLASS="FLEX FLEX-AROUND">
+    {% for image in range(image_count) %}
+    <IMG SRC="preview-{{ image }}.jpg" height="405" width="540" style="padding: 10px;">
+    {% endfor %}
+</DIV>
+{% endif %}
 {% endblock %}
 
 <DIV CLASS="REVIEW-CONTAINER"> <DIV CLASS="REVIEW">

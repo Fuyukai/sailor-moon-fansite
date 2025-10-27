@@ -118,3 +118,5 @@ DIV.PARA > P, DIV.PARA > SPAN {
 UL.CIRCLE {
     list-style-type: disc;
 }
+
+.HIDDEN { display: none; }
