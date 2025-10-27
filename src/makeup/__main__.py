@@ -114,6 +114,9 @@ def main():
     OUT_DIR.mkdir(exist_ok=True)
 
     for f in OUT_DIR.iterdir():
+        if f.name == ".git":
+            continue
+
         try:
             shutil.rmtree(f)
         except NotADirectoryError:

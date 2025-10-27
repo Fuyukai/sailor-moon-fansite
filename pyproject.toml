@@ -17,6 +17,7 @@ dependencies = [
 
 [project.scripts]
 "make-up" = "makeup.__main__:main"
+"next-ep" = "makeup.scripts.next_ep:main"
 
 [dependency-groups]
 dev = [
