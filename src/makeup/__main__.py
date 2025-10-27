@@ -5,6 +5,7 @@ Makes up the static website.
 import datetime
 import os
 import shutil
+import subprocess
 import time
 import zoneinfo
 from pathlib import Path
@@ -72,21 +73,40 @@ def build_recursively(env: Environment):
                 if file.startswith("_"):
                     continue
 
-                full_path = root / file
-                inter_path = full_path.relative_to(TEMPLATE_DIR)
+                templ_path = root / file
+                inter_path = templ_path.relative_to(TEMPLATE_DIR)
                 out_path = OUT_DIR / inter_path
                 out_path.parent.mkdir(parents=True, exist_ok=True)
 
-                filetime = full_path.stat().st_mtime
+                # this previously used the mtime but that obviously changed when i re-cloned the
+                # repo. commit time is Close Enough tm
+                file_commit = subprocess.check_output([
+                    "git",
+                    "rev-list",
+                    "-1",
+                    "HEAD",
+                    "--",
+                    templ_path,
+                ]).decode("utf-8").strip()
+                filetime = int(
+                    subprocess.check_output([
+                        "git",
+                        "show",
+                        "-s",
+                        "--format=%ct",
+                        file_commit,
+                    ]).decode("utf-8")
+                )
+
                 date = datetime.datetime.fromtimestamp(filetime, tz=zoneinfo.ZoneInfo("UTC"))
 
                 if not file.endswith(".html") and not file.endswith(".jinja2"):
                     # file that should be included statically, just directly copy it
-                    print(f"copy: {full_path} -> {out_path}")
-                    shutil.copy2(full_path, out_path)
+                    print(f"copy: {templ_path} -> {out_path}")
+                    shutil.copy2(templ_path, out_path)
 
                 else:
-                    print(f"recursively rendering: {full_path!s} -> {out_path}")
+                    print(f"recursively rendering: {templ_path!s} -> {out_path}")
                     templ = env.get_template(str(inter_path))
                     rendered = templ.render(file_date=date)
                     out_path.write_text(rendered)
